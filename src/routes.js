@@ -3,18 +3,21 @@ import { makeInvoker } from 'awilix-koa'
 
 const router = new KoaRouter()
 
-const controllers = ({ todosService }) => {
-  return {
-    getTodos: async (ctx) => {
-      const todos = await todosService.getTodos(ctx.request)
-      ctx.body = todos
-      ctx.status = 200
-    },
-  }
-}
+const methods = ({ todosService }) => ({
+  getTodos: async (ctx) => {
+    console.log('ctx.state: ', ctx.state)
 
-const api = makeInvoker(controllers)
+    const todos = await todosService.getTodos(ctx.request)
+    ctx.body = todos
+    ctx.status = 200
+  },
+})
+const api = makeInvoker(methods)
 
-router.get('/todos', api('getTodos'))
+router.get('/todos', (ctx, next) => {
+  ctx.state.eu = true;
+  
+  next()
+}, api('getTodos'))
 
 export default router
