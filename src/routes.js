@@ -1,17 +1,25 @@
 import KoaRouter from 'koa-router'
 import { makeInvoker } from 'awilix-koa'
 
+import controllers from './app/controllers'
+
 const router = new KoaRouter()
 
-const methods = ({ todosService }) => ({
-  getTodos: async (ctx) => {
-    console.log('ctx.state: ', ctx.state)
+const methods = dependences => {
+  const constrollersInjecteds = controllers.map(controller => controller(dependences))
+  
+  let methodsInjectds = {}
 
-    const todos = await todosService.getTodos(ctx.request)
-    ctx.body = todos
-    ctx.status = 200
-  },
-})
+  constrollersInjecteds.forEach(controllerInjectedd => {
+    methodsInjectds = {
+      ...methodsInjectds,
+      ...controllerInjectedd
+    }
+  })
+
+  return methodsInjectds
+}
+
 const api = makeInvoker(methods)
 
 router.get('/todos', (ctx, next) => {

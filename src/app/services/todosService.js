@@ -9,7 +9,7 @@ export default function makeTodosService({
   return {
     getTodos: async (request) => {
       console.log('request: ', request)
-      const response = await todosRepository.get('Aqui tem b porra.')
+      const response = await todosRepository.get('a.')
       return response
     }
   }

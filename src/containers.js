@@ -1,14 +1,14 @@
 import { createContainer, asClass, asFunction } from 'awilix'
 import { scopePerRequest } from 'awilix-koa'
 
-import makeTodosService from './todosService'
-import TodosRepository from './todosRepository'
+import todosService from './app/services/todosService'
+import TodosRepository from './app/models/TodosRepository'
 
 const containers = () => {
   const container = createContainer()
   
   container.register({
-    todosService: asFunction(makeTodosService).scoped(),
+    todosService: asFunction(todosService).scoped(),
     todosRepository: asClass(TodosRepository).singleton()
   })
   
