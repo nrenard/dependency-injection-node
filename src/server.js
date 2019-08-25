@@ -1,13 +1,15 @@
-import './config/env';
-
 import Koa from 'koa';
 import helmet from 'koa-helmet';
 import cors from '@koa/cors';
 
-import containers from './containers';
 import mongoDB from './config/mongo';
+import configEnv from './config/env';
+
+import containers from './containers';
 
 import router from './routes';
+
+configEnv();
 
 class Server {
   constructor() {
