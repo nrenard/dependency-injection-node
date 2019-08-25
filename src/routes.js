@@ -1,31 +1,31 @@
-import KoaRouter from 'koa-router'
-import { makeInvoker } from 'awilix-koa'
+import KoaRouter from 'koa-router';
+import { makeInvoker } from 'awilix-koa';
 
-import controllers from './app/controllers'
+import controllers from './app/controllers';
 
-const router = new KoaRouter()
+const router = new KoaRouter();
 
-const methods = dependences => {
-  const constrollersInjecteds = controllers.map(controller => controller(dependences))
-  
-  let methodsInjectds = {}
+const methods = (dependences) => {
+  const constrollersInjecteds = controllers.map((controller) => controller(dependences));
 
-  constrollersInjecteds.forEach(controllerInjectedd => {
+  let methodsInjectds = {};
+
+  constrollersInjecteds.forEach((controllerInjectedd) => {
     methodsInjectds = {
       ...methodsInjectds,
-      ...controllerInjectedd
-    }
-  })
+      ...controllerInjectedd,
+    };
+  });
 
-  return methodsInjectds
-}
+  return methodsInjectds;
+};
 
-const api = makeInvoker(methods)
+const api = makeInvoker(methods);
 
 router.get('/todos', (ctx, next) => {
   ctx.state.eu = true;
-  
-  next()
-}, api('getTodos'))
 
-export default router
+  next();
+}, api('getTodos'));
+
+export default router;

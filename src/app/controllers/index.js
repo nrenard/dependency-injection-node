@@ -1,3 +1,3 @@
-import TodosController from './TodosController'
+import TodosController from './TodosController';
 
-export default [TodosController]
+export default [TodosController];
